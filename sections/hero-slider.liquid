@@ -1,0 +1,48 @@
+
+<div class="splide">
+    <div class="splide__track">
+        <ul class="splide__list">
+            {% for slide in section.blocks %}
+                {%- if slide.settings.url != blank -%}
+                    <li class="splide__slide"><a href="{{slide.settings.url}}">{{slide.settings.slide | img_url: "master" | img_tag }}</a></li>
+                {%- else -%}
+                    <li class="splide__slide">{{slide.settings.slide | img_url: "master" | img_tag }}</li>
+                {%- endif -%}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% style %}
+.slideshow{width:100%;float:left}
+.slideshow .splide__slide img{width:100%;}
+{% endstyle %}
+{% schema %}
+{
+    "name": "Hero Slider",  
+    "tag": "section",
+    "class": "slideshow",
+    "blocks":[
+        {
+            "name": "Slide",
+            "type": "slide_image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "label": "Add Slide",
+                    "id": "slide"
+                },
+                {
+                    "type": "text",
+                    "label": "URL",
+                    "id": "url"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Hero Slider"
+        }
+    ]
+}
+{% endschema %}
