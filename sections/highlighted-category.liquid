@@ -1,0 +1,148 @@
+<div class="collection">
+    <div class="wrapper">
+        {% if section.settings.heading != blank %}
+            <h2>{{ section.settings.heading }}</h2>
+        {% endif %}
+        <div class="category_grid">
+            {%- for cat in section.blocks -%}
+            <div class="box">
+                {%- unless cat.settings.img_picker == blank -%} 
+                {% if cat.settings.cat_collection != blank %}
+                    <a href="/collections/{{ cat.settings.cat_collection }}">{{ cat.settings.img_picker | img_url: "master" | img_tag }}</a>
+                {% else %}
+                    {{ cat.settings.img_picker | img_url: "master" | img_tag }}
+                {% endif %} 
+                {%- endunless -%}
+        
+                {% if cat.settings.cat_text != blank %}
+                <div class="category_text">
+                    <p>{{ cat.settings.cat_text }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+{%- style -%}
+    .collection{
+        {% if section.settings.sec_margin != blank %}
+            margin: {{ section.settings.sec_margin }};
+        {%- endif -%}
+        {% if section.settings.sec_padding != blank %}
+            padding: {{ section.settings.sec_padding }};
+        {%- endif -%}
+    }
+    .collection h2{
+        font-weight: bold;
+        {% if section.settings.sec_textalign != blank %}
+            text-align: {{ section.settings.sec_textalign }};
+        {%- endif -%}
+    }
+{%- endstyle -%}
+
+{% schema %}
+
+{
+    "name": "Highlighted Category",
+    "tag": "section",
+    "class": "spotlight_section",
+    "settings":[
+        {
+            "type": "text",
+            "label": "Heading",
+            "id": "heading"
+        },
+        {
+            "type": "color",
+            "label": "Background Color",
+            "id": "section_bg"
+        },
+        {
+            "type": "select",
+            "id": "headtag",
+            "label": "Select Heading Tag",
+            "options": [
+                {
+                    "value": "h2",
+                    "label": "H2"
+                },
+                {
+                    "value": "h3",
+                    "label": "H3"
+                },
+                {
+                    "value": "h4",
+                    "label": "H4"
+                },
+                {
+                    "value": "h5",
+                    "label": "H5"
+                },
+                {
+                    "value": "h6",
+                    "label": "H6"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "label": "Text Align",
+            "id": "sec_textalign",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "label": "Margin",
+            "id": "sec_margin"
+        },
+        {
+            "type": "text",
+            "label": "Padding",
+            "id": "sec_padding"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Category Image",
+            "type": "category",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "img_picker",
+                    "label": "Select Category Image"
+                },
+                {
+                    "type": "html",
+                    "id": "cat_text",
+                    "label": "Category Text"
+                },
+                {
+                    "type": "collection",
+                    "id": "cat_collection",
+                    "label": "Select Collection"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Highlighted Category"
+        }
+    ]
+}
+
+{% endschema %}
