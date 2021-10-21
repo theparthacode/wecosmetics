@@ -1,0 +1,55 @@
+
+<h2>{{ section.settings.heading }}</h2>
+{%- for cat in section.blocks -%}
+    {{ cat.settings.img_picker | img_url: "master" | img_tag }}
+{%- endfor -%}
+
+{% schema %}
+
+{
+    "name": "Highlighted Category",
+    "tag": "section",
+    "class": "spotlight_section",
+    "settings":[
+        {
+            "type": "text",
+            "label": "Heading",
+            "id": "heading"
+        },
+        {
+            "type": "color",
+            "label": "Background Color",
+            "id": "section_bg"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Category Image",
+            "type": "category",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "img_picker",
+                    "label": "Select Category Image"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_text",
+                    "label": "Category Text"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_url",
+                    "label": "Category URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Highlighted Category"
+        }
+    ]
+}
+
+{% endschema %}

@@ -8,14 +8,16 @@
                 {%- else -%}
                     <li class="splide__slide">{{slide.settings.slide | img_url: "master" | img_tag }}</li>
                 {%- endif -%}
-            {% endfor %}
+            {% endfor %}s
         </ul>
     </div>
 </div>
+
 {% style %}
 .slideshow{width:100%;float:left}
 .slideshow .splide__slide img{width:100%;}
 {% endstyle %}
+
 {% schema %}
 {
     "name": "Hero Slider",  
