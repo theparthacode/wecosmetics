@@ -38,6 +38,9 @@
         {% if section.settings.sec_textalign != blank %}
             text-align: {{ section.settings.sec_textalign }};
         {%- endif -%}
+        {% if section.settings.sec_transform != 'none' %}
+            text-transform: {{ section.settings.sec_transform }};
+        {%- endif -%}
     }
 {%- endstyle -%}
 
@@ -63,6 +66,10 @@
             "id": "headtag",
             "label": "Select Heading Tag",
             "options": [
+                {
+                    "value": "h1",
+                    "label": "H1"
+                },
                 {
                     "value": "h2",
                     "label": "H2"
@@ -103,6 +110,30 @@
                     "label": "Right"
                 }
             ]
+        },
+        {
+            "type": "select",
+            "label": "Text Transform",
+            "id": "sec_transform",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "None"
+                },
+                {
+                    "value": "lowercase",
+                    "label": "Lowercase"
+                },
+                {
+                    "value": "capitalize",
+                    "label": "Capitalize"
+                },
+                {
+                    "value": "uppercase",
+                    "label": "Uppercase"
+                }
+            ],
+            "default": "none"
         },
         {
             "type": "text",
