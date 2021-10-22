@@ -2366,6 +2366,7 @@ section,
 }
 img {
   vertical-align: middle;
+  max-width: 100%;
 }
 
 .category_grid {

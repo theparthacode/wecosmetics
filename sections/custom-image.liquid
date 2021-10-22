@@ -1,0 +1,134 @@
+
+{% for img in section.blocks %}
+    {% if img.settings.image_field != blank or section.settings.html_heading != blank %}
+        <section class="img_block">
+            <div class="wrapper">
+                <h2>{{ section.settings.html_heading }}</h2>
+                {% if img.settings.url_field != blank %}
+                    <a href="{{ img.settings.url_field }}">{{ img.settings.image_field | img_url: "master" | img_tag }}</a>
+                {% else %}
+                    {{ img.settings.image_field | img_url: "master" | img_tag }}
+                {% endif %}
+            </div>
+        </section>
+    {% endif %}
+{% endfor %}
+
+{%- style -%}
+    .custom_html{
+        {% if section.settings.sec_margin != blank %}
+            margin: {{ section.settings.sec_margin }};
+        {%- endif -%}
+        {% if section.settings.sec_padding != blank %}
+            padding: {{ section.settings.sec_padding }};
+        {%- endif -%}
+        {% if section.settings.bgColor != blank %}
+            background-color: {{ section.settings.bgColor }};
+        {%- endif -%}
+    }
+    .custom_html h2{
+        font-weight: bold;
+        {% if section.settings.sec_textalign != blank %}
+            text-align: {{ section.settings.sec_textalign }};
+        {%- endif -%}
+        {% if section.settings.sec_transform != 'none' %}
+            text-transform: {{ section.settings.sec_transform }};
+        {%- endif -%}
+    }
+{%- endstyle -%}
+
+{% schema %}
+{
+    "name" : "Image Field",
+    "tag": "section",
+    "class": "custom_html",
+    "settings": [
+        {
+            "type": "text",
+            "label": "Heading",
+            "id": "html_heading"
+        },
+        {
+            "type": "color",
+            "label": "Background Color",
+            "id": "bgColor"
+        },
+        {
+            "type": "select",
+            "label": "Text Align",
+            "id": "sec_textalign",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "label": "Text Transform",
+            "id": "sec_transform",
+            "options": [
+                {
+                    "value": "none",
+                    "label": "None"
+                },
+                {
+                    "value": "lowercase",
+                    "label": "Lowercase"
+                },
+                {
+                    "value": "capitalize",
+                    "label": "Capitalize"
+                },
+                {
+                    "value": "uppercase",
+                    "label": "Uppercase"
+                }
+            ],
+            "default": "none"
+        },
+        {
+            "type": "text",
+            "label": "Margin",
+            "id": "sec_margin"
+        },
+        {
+            "type": "text",
+            "label": "Padding",
+            "id": "sec_padding"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Image",
+            "type": "image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_field",
+                    "label": "Image Field"
+                },
+                {
+                    "type": "text",
+                    "id": "url_field",
+                    "label": "URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Image Picker"
+        }
+    ]
+}   
+{% endschema %}
