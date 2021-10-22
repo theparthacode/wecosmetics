@@ -3,7 +3,9 @@
     {% if img.settings.image_field != blank or section.settings.html_heading != blank %}
         <section class="img_block">
             <div class="wrapper">
-                <h2>{{ section.settings.html_heading }}</h2>
+                {% if section.settings.html_heading %}
+                    <h2>{{ section.settings.html_heading }}</h2>
+                {% endif %}
                 {% if img.settings.url_field != blank %}
                     <a href="{{ img.settings.url_field }}">{{ img.settings.image_field | img_url: "master" | img_tag }}</a>
                 {% else %}
