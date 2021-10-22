@@ -2413,6 +2413,7 @@ img {
   line-height: 22px;
   font-weight: 700;
   letter-spacing: 0;
+  min-height: 68px;
 }
 .category_grid p {
   margin: 0;
