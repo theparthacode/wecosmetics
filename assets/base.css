@@ -2414,6 +2414,9 @@ img {
   font-weight: 700;
   letter-spacing: 0;
   min-height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .category_grid p {
   margin: 0;
