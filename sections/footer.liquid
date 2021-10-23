@@ -312,6 +312,14 @@
   </div>
 </footer>
 
+{% for block in section.blocks %}
+  {% style %}
+      {% if block.settings.color != blank %}
+        .footer-block__heading{ color: {{ block.settings.color }}; }
+        {% endif %}
+  {% endstyle %}
+{% endfor %}
+
 {% javascript %}
   class LocalizationForm extends HTMLElement {
     constructor() {
@@ -378,6 +386,11 @@
           "default": "Quick links",
           "label": "t:sections.footer.blocks.link_list.settings.heading.label",
           "info": "t:sections.footer.blocks.link_list.settings.heading.info"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Header Color"
         },
         {
           "type": "link_list",
