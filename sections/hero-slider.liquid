@@ -1,15 +1,15 @@
 
 <div class="splide">
     <div class="splide__track">
-        <ul class="splide__list">
+        <div class="splide__list">
             {% for slide in section.blocks %}
                 {%- if slide.settings.url != blank -%}
-                    <li class="splide__slide"><a href="{{slide.settings.url}}">{{slide.settings.slide | img_url: "master" | img_tag }}</a></li>
+                    <div class="splide__slide"><a href="{{slide.settings.url}}">{{slide.settings.slide | img_url: "master" | img_tag }}</a></div>
                 {%- else -%}
-                    <li class="splide__slide">{{slide.settings.slide | img_url: "master" | img_tag }}</li>
+                    <div class="splide__slide">{{slide.settings.slide | img_url: "master" | img_tag }}</div>
                 {%- endif -%}
             {% endfor %}
-        </ul>
+        </div>
     </div>
 </div>
 

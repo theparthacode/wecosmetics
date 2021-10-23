@@ -27,27 +27,31 @@
       </div>
   
       <slider-component class="slider-mobile-gutter">
-        <ul class="grid grid--2-col product-grid{% if products_to_display == 4 or section.settings.collection == blank %} grid--2-col-tablet grid--4-col-desktop{% else %} grid--3-col-tablet{% endif %}{% if products_to_display > 5 %} grid--one-third-max grid--4-col-desktop grid--quarter-max{% endif %}{% if section.settings.collection.all_products_count > 2 and section.settings.swipe_on_mobile and section.settings.products_to_show > 2 %} slider slider--tablet grid--peek{% endif %}{% if section.settings.show_view_all == false or section.settings.collection.products.size < section.settings.products_to_show %} negative-margin{% endif %}{% if section.settings.show_view_all and section.settings.collection.products.size > section.settings.products_to_show %} negative-margin--small{% endif %}" role="list">
-          {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-            <li class="grid__item{% if section.settings.collection.all_products_count > 2 and section.settings.swipe_on_mobile and section.settings.products_to_show > 2 %} slider__slide{% endif %}">
-              {% render 'product-card',
-                product_card_product: product,
-                media_size: section.settings.image_ratio,
-                show_secondary_image: section.settings.show_secondary_image,
-                add_image_padding: section.settings.add_image_padding,
-                show_vendor: section.settings.show_vendor,
-                show_image_outline: section.settings.show_image_outline,
-                show_rating: section.settings.show_rating
-              %}
-            </li>
-          {%- else -%}
-            {%- for i in (1..4) -%}
-              <li class="grid__item">
-                {% render 'product-card-placeholder' %}
+        <div class="product_slider">
+          <div class="splide__track">
+            <ul class="splide__list">
+            {%- for product in section.settings.collection.products -%}
+              <li class="splide__slide{% if section.settings.collection.all_products_count > 2 and section.settings.swipe_on_mobile and section.settings.products_to_show > 2 %} slider__slide{% endif %}">
+                {% render 'product-card',
+                  product_card_product: product,
+                  media_size: section.settings.image_ratio,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  add_image_padding: section.settings.add_image_padding,
+                  show_vendor: section.settings.show_vendor,
+                  show_image_outline: section.settings.show_image_outline,
+                  show_rating: section.settings.show_rating
+                %}
               </li>
+            {%- else -%}
+              {%- for i in (1..4) -%}
+                <li class="grid__item">
+                  {% render 'product-card-placeholder' %}
+                </li>
+              {%- endfor -%}
             {%- endfor -%}
-          {%- endfor -%}
-        </ul>
+            </ul>
+          </div>
+        </div>
         {%- if section.settings.collection.all_products_count > 2 and section.settings.swipe_on_mobile and section.settings.products_to_show > 2 -%}
           <div class="slider-buttons no-js-hidden{% if section.settings.collection.all_products_count < 4 %} medium-hide{% endif %}{% if section.settings.collection.all_products_count < 3 %} small-hide{% endif %}">
             <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'accessibility.previous_slide' | t }}">{% render 'icon-caret' %}</button>
@@ -65,7 +69,7 @@
     {%- if section.settings.show_view_all and more_in_collection -%}
       <div class="center{% if section.settings.swipe_on_mobile %} small-hide medium-hide{% endif %}">
         <a href="{{ section.settings.collection.url }}"
-          class="button"
+          class="button view_all_btn"
           aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title }}"
         >
           {{ 'sections.featured_collection.view_all' | t }}
@@ -74,6 +78,23 @@
     {%- endif -%}
   </div>
 </div>
+
+{% javascript %}
+document.addEventListener("DOMContentLoaded", function () {
+  var splide = new Splide(".product_slider", {
+      // type       : 'loop',
+      perPage: 4,
+      gap: 0,
+      pagination: false,
+      breakpoints: {
+        640: {
+          perPage: 4,
+        },
+      },
+  });
+  splide.mount();
+});
+{% endjavascript %}
 
 {% style %}
   .collection .title-wrapper-with-link{
@@ -86,7 +107,12 @@
   {% if section.settings.padding != blank %}
     .collection{padding: {{ section.settings.padding }};}
   {% endif %}
-
+  {% if section.settings.show_view_all != blank %}
+    .collection .view_all_btn{margin: {{ section.settings.btn_margin }};}
+  {% endif %}
+  .product_slider .splide__slide{padding: 10px;}
+  .product_slider .splide__slide .card-wrapper{box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);padding: 7px;border-radius: 14px;}
+.product_slider .splide__slide .card__inner{border-radius: 6px; overflow: hidden;}
 {% endstyle %}
 
 {% schema %}
@@ -149,6 +175,11 @@
       "id": "show_view_all",
       "default": true,
       "label": "t:sections.featured-collection.settings.show_view_all.label"
+    },
+    {
+      "type": "text",
+      "id": "btn_margin",
+      "label": "Button Margin"
     },
     {
       "type": "checkbox",
