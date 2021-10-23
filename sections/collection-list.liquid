@@ -5,7 +5,7 @@
 
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
-<div class="collection-list-wrapper page-width{% if section.settings.swipe_on_mobile == true %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %}">
+<div class="wrapper">
   <div class="title-wrapper-with-link{% if section.settings.swipe_on_mobile == true %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %}{% if section.settings.title == blank %} title-wrapper-with-link--no-heading{% endif %}">
     <h2 class="collection-list-title">{{ section.settings.title | escape }}</h2>
 
@@ -116,12 +116,28 @@
     </div>
   {%- endif -%}
 </div>
+{%- style -%}
+  {% if section.settings.textalign != blank %}
+    .collection-list-section .title-wrapper-with-link{
+        justify-content: {{ section.settings.textalign }};
+    }
+  {%- endif -%}
+  {% if section.settings.bgcolor != blank %}
+    .collection-list-section{background-color: {{ section.settings.bgcolor }};}
+  {%- endif -%}
+  {% if section.settings.margin != blank %}
+    .collection-list-section{margin: {{ section.settings.margin }};}
+  {%- endif -%}
+  {% if section.settings.padding != blank %}
+    .collection-list-section{padding: {{ section.settings.padding }};}
+  {%- endif -%}
+{%- endstyle -%}
 
 {% schema %}
 {
   "name": "t:sections.collection-list.name",
   "tag": "section",
-  "class": "spaced-section collection-list-section",
+  "class": "collection-list-section",
   "max_blocks": 15,
   "settings": [
     {
@@ -129,6 +145,40 @@
       "id": "title",
       "default": "Collections",
       "label": "t:sections.collection-list.settings.title.label"
+    },
+    {
+      "type": "select",
+      "id": "textalign",
+      "label": "Align Heading",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "Section Margin"
+    },
+    {
+      "type": "text",
+      "id": "padding",
+      "label": "Section Padding"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background"
     },
     {
       "type": "select",
