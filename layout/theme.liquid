@@ -106,9 +106,12 @@
           font-size: 1.6rem;
         }
       }
-    {% endstyle %}
-
-    {{ 'base.css' | asset_url | stylesheet_tag }}
+      {% endstyle %}
+      
+      {{ 'base.css' | asset_url | stylesheet_tag }}
+      <!-- Owl Carousel -->
+      <script src="{{ 'splide.min.js' | asset_url }}" async="async"></script>
+      <link rel="stylesheet" href="{{ 'splide.min.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -123,9 +126,6 @@
 
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   
-    <!-- Owl Carousel -->
-    <script src="{{ 'splide.min.js' | asset_url }}" async="async"></script>
-    <link rel="stylesheet" href="{{ 'splide.min.css' | asset_url }}" media="print" onload="this.media='all'">
   
   </head>
 
