@@ -114,6 +114,18 @@
                         {%- endif -%}
                       </ul>
                     {% endif %}
+                    {%- if block.settings.show_payment_options -%}
+                      <div class="footer__payment">
+                        <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
+                        <ul class="list list-payment" role="list">
+                          {%- for type in shop.enabled_payment_types -%}
+                            <li class="list-payment__item">
+                              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- endif -%}
                   </div>
                 {%- when 'link_list' -%}
                   {%- if block.settings.menu != blank and block.settings.heading != blank -%}
@@ -290,7 +302,7 @@
   {%- endif -%}
 
   <div class="footer__content-bottom">
-    <div class="footer__content-bottom-wrapper page-width">
+    <div class="footer__content-bottom-wrapper wrapper">
       <div class="footer__column footer__localization">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           <noscript>
@@ -378,21 +390,8 @@
         {%- endif -%}
       </div>
       <div class="footer__column footer__column--info">
-        {%- if section.settings.payment_enable -%}
-          <div class="footer__payment">
-            <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-            <ul class="list list-payment" role="list">
-              {%- for type in shop.enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
         <div class="footer__copyright caption">
-          <small class="copyright__content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}</small>
-          <small class="copyright__content">{{ powered_by_link }}</small>
+          <small class="copyright__content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}, All right reserved.</small>
         </div>
       </div>
     </div>
@@ -411,6 +410,8 @@
       {% if block.settings.list_color != blank %}
         .footer_collection_list li a{ color: {{ block.settings.list_color }}; }
       {% endif %}
+      .list-payment{padding-left: 0 !important;justify-content: flex-start;}
+      .list-payment svg{width: 30px;}
   {% endstyle %}
 {% endfor %}
 
@@ -515,6 +516,11 @@
           "type": "checkbox",
           "id": "social_links",
           "label": "Display Social Links"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_payment_options",
+          "label": "Paymeny Options"
         }
       ]
     },
