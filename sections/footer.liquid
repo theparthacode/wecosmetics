@@ -151,7 +151,7 @@
                     {% endif %}
                     <ul class="footer_collection_list footer-block__details-content list-unstyled">
                       {% for collection in collections %}
-                        <li>{{ collection.title | link_to: collection.url }}</li>
+                        <li><a href="{{collection.url}}" class="link link--text list-menu__item list-menu__item--link">{{ collection.title }}</a></li>
                       {% endfor %}
                     </ul>
                   </div>
