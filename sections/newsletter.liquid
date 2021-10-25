@@ -1,8 +1,9 @@
 {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
 {{ 'newsletter-section.css' | asset_url | stylesheet_tag }}
 
-<div class="newsletter center{% if section.settings.full_width == false %} newsletter--narrow page-width{% endif%}">
-  <div class="newsletter__wrapper color-{{ section.settings.color_scheme }} gradient">
+<div class="newsletter color-{{ section.settings.color_scheme }} gradient center{% if section.settings.full_width == false %} newsletter--narrow page-width{% endif%}">
+  <!-- <div class="color-{{ section.settings.color_scheme }} gradient"> -->
+    <div class="wrapper">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when '@app' -%}
@@ -56,13 +57,39 @@
       {%- endcase -%}
     {%- endfor -%}
   </div>
+  <!-- </div> -->
 </div>
+
+{% style %}
+  .newsletter h2{margin:0;}
+  {% if section.settings.margin != blank %}
+    .newsletter{margin: {{ section.settings.margin }};}
+  {% endif %}
+  {% if section.settings.padding != blank %}
+    .newsletter{padding: {{ section.settings.padding }};}
+  {% endif %}
+
+  {% for block in section.blocks %}
+  {% if block.settings.form_margin != blank %}
+    .newsletter form.newsletter-form{margin: {{ block.settings.form_margin }};}
+  {% endif %}
+  {% if block.settings.fontsize != blank %}
+    .newsletter h2{font-size: {{ block.settings.fontsize }};}
+  {% endif %}
+  {% if block.settings.text_transform != blank %}
+    .newsletter h2{text-transform: {{ block.settings.text_transform }};}
+  {% endif %}
+  {% if block.settings.margin != blank %}
+    .newsletter h2{margin: {{ block.settings.margin }};}
+  {% endif %}
+  {% endfor %}
+{% endstyle %}
 
 {% schema %}
 {
   "name": "t:sections.newsletter.name",
   "tag": "section",
-  "class": "spaced-section spaced-section--full-width",
+  "class": "spaced-section--full-width",
   "settings": [
     {
       "type": "select",
@@ -93,6 +120,16 @@
       "label": "t:sections.newsletter.settings.color_scheme.label"
     },
     {
+      "type": "text",
+      "id": "margin",
+      "label": "Margin"
+    },
+    {
+      "type": "text",
+      "id": "padding",
+      "label": "Padding"
+    },
+    {
       "type": "checkbox",
       "id": "full_width",
       "default": true,
@@ -114,6 +151,37 @@
           "id": "heading",
           "default": "Subscribe to our emails",
           "label": "t:sections.newsletter.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "text",
+          "id": "margin",
+          "default": "0 0 10px 0",
+          "label": "Margin"
+        },
+        {
+          "type": "text",
+          "id": "fontsize",
+          "default": "4rem",
+          "label": "Font Size"
+        },
+        {
+          "type": "select",
+          "id": "text_transform",
+          "label": "Text Transform",
+          "options": [
+            {
+              "value": "capitalize",
+              "label": "Capitalize"
+            },
+            {
+              "value": "uppercase",
+              "label": "Uppercase"
+            },
+            {
+              "value": "lowercase",
+              "label": "Lowercase"
+            }
+          ]
         }
       ]
     },
@@ -133,7 +201,14 @@
     {
       "type": "email_form",
       "name": "t:sections.newsletter.blocks.email_form.name",
-      "limit": 1
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "form_margin",
+          "label": "Form Margin"
+        }
+      ]
     },
     {
       "type": "@app"
@@ -141,7 +216,7 @@
   ],
   "presets": [
     {
-      "name": "t:sections.newsletter.presets.name",
+      "name": "Newsletter",
       "blocks": [
         {
           "type": "heading"
