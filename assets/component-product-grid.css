@@ -1,15 +1,22 @@
-.product-grid .grid__item {
+/* .product-grid .grid__item {
   padding-bottom: 2rem;
-}
+} */
 
+#ProductGridContainer {
+  display: flex;
+  gap: 20px;
+}
+#ProductGridContainer .product_filter {
+  flex-basis: 340px;
+}
 .product-grid.negative-margin {
   margin-bottom: -2rem;
 }
 
 @media screen and (min-width: 750px) {
-  .product-grid .grid__item {
+  /* .product-grid .grid__item {
     padding-bottom: calc(5rem + var(--page-width-margin));
-  }
+  } */
 
   .product-grid.negative-margin {
     margin-bottom: calc(-5rem - var(--page-width-margin));
